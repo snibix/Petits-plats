@@ -158,12 +158,14 @@ $primary-bg-color: #ededed; */
   display: none;
   position: absolute;
   background-color: #fff;
-  min-width: 160px;
+  min-width: 140px;
   z-index: 1;
   padding: 10px 16px;
   border: 1px solid #ccc;
   border-top: none;
   border-radius: 0 0 8px 8px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .dropdown-content.active {

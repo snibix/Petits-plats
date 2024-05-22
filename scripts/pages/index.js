@@ -19,7 +19,7 @@ class App {
   // Méthode pour créer et afficher les filtres
   renderFilters() {
     const filterSection = document.querySelector("#filters");
-    const filters = filterTemplate(); // Assurez-vous que filterTemplate renvoie les filtres nécessaires
+    const filters = filterTemplate(this.recipes); // Assurez-vous que filterTemplate renvoie les filtres nécessaires
 
     filterSection.innerHTML = ""; // Vider la section des filtres avant de la remplir
     filterSection.appendChild(filters);
