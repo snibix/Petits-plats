@@ -1,0 +1,75 @@
+.dropdown {
+  position: relative;
+  display: inline-block;
+  text-align: center;
+
+  &-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 140px;
+    z-index: 1;
+    padding: 10px 16px;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+
+  &-search {
+    text-align: left;
+    font-size: 0.9em;
+    background-image: url(../../assets/img/loup-gray.svg);
+    background-position: center right 11px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    border-color: #c6c6c6;
+    padding: 10px 20px;
+    margin-bottom: 5px;
+    width: 100%;
+  }
+
+  &-item {
+    color: black;
+    margin-top: 5px;
+    padding: 10px 12px 12px 0;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    background-color: #fff;
+  }
+
+  &-button {
+    border: 1px solid #c6c6c6;
+    padding: 1rem 4rem 1rem 2rem;
+    background-color: #fff;
+    border-radius: 0.8em;
+    font-size: 1.3rem;
+    text-align: left;
+    cursor: pointer;
+    text-transform: capitalize;
+
+    &::after {
+      position: absolute;
+      content: "";
+      background: no-repeat center / contain url(../../assets/img/down.svg)
+        transparent;
+      width: 1em;
+      height: 1em;
+      top: 50%;
+      right: 1.125em;
+      transform: translateY(-50%) scaleY(1);
+      transition: transform ease-in-out 0.3s;
+    }
+  }
+
+  &.active &-content {
+    display: block;
+  }
+
+  &.active &-button {
+    border-bottom: none;
+    border-radius: 0.8em 0.8em 0 0;
+  }
+}

@@ -1,6 +1,6 @@
 .header {
   background: no-repeat center / cover
-    url(../../assets/img/lampos-aritonang-24gR_9lCdes-unsplash\ 1.jpg);
+    url(../../assets/img/lampos-aritonang-24gR_9lCdes-unsplash1.jpg);
   padding-bottom: 133px;
   &__top {
     display: flex;
@@ -27,6 +27,7 @@
   max-width: 954px;
   margin: 0 auto;
 }
+
 .input-search {
   padding: 1.5em 8em 1.5em 2em;
   font-size: 1.2rem;
@@ -35,6 +36,7 @@
   border-radius: 0.6875em;
   box-sizing: border-box;
 }
+
 .btn-search {
   position: absolute;
   aspect-ratio: 1;
@@ -47,97 +49,29 @@
   background: no-repeat center / 50% #000 url(../../assets/img/loup-white.svg);
   transition: all ease-in-out 0.3s;
 }
+
 #filters {
   display: flex;
   flex-flow: row nowrap;
   gap: 2rem;
 }
+
 #filters .container {
   display: flex;
   justify-content: space-between;
   padding: 100px 4rem 0px;
   width: 100%;
 }
+
 .filters {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
+
 .dropdowns {
   display: flex;
   gap: 30px;
-}
-/* Style du dropdown */
-.dropdown {
-  position: relative;
-  display: inline-block;
-  text-align: center;
-}
-.dropdown-content .drop-input {
-  text-align: left;
-  font-size: 0.9em;
-  background-image: url(../../assets/img/loup-gray.svg);
-  background-position: center right 11px;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  border-color: #c6c6c6;
-  padding: 10px 20px;
-  margin-bottom: 5px;
-  width: 100%;
-}
-
-.dropbtn {
-  position: relative;
-  border: 1px solid #c6c6c6;
-  padding: 1rem 4rem 1rem 2rem;
-  background-color: #fff;
-  border-radius: 0.8em;
-  font-size: 1.3rem;
-  text-align: left;
-  cursor: pointer;
-}
-.dropbtn.active {
-  border-bottom: none;
-  border-radius: 0.8em 0.8em 0 0;
-}
-.dropbtn::after {
-  position: absolute;
-  content: "";
-  background: no-repeat center / contain url(../../assets/img/down.svg)
-    transparent;
-  width: 1em;
-  height: 1em;
-  top: 50%;
-  right: 1.125em;
-  transform: translateY(-50%) scaleY(1);
-  transition: transform ease-in-out 0.3s;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #fff;
-  min-width: 140px;
-  z-index: 1;
-  padding: 10px 16px;
-  border: 1px solid #ccc;
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-  max-height: 300px;
-  overflow-y: auto;
-}
-.dropdown-content.active {
-  display: block;
-}
-
-.dropdown-content a {
-  color: black;
-  margin-top: 5px;
-  padding: 10px 12px 12px 0;
-  text-decoration: none;
-  display: block;
-  text-align: left;
-  background-color: #fff;
 }
 
 .results {
@@ -148,12 +82,14 @@
   font-family: "Anton", sans-serif;
   color: #000;
 }
+
 .content-label-search {
   display: flex;
   padding: 1em 4rem;
   gap: 15px;
   align-items: start;
 }
+
 .label-search {
   display: none;
   /* display: flex; */
@@ -166,6 +102,7 @@
   min-width: 205px;
   background-color: #ffd15b;
 }
+
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -181,20 +118,20 @@
   border-radius: 21px;
   background-color: #ffffff;
   box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
-}
 
-.card-img {
-  object-fit: cover;
-  width: 100%;
-  height: 273px;
-}
+  &-img {
+    object-fit: cover;
+    width: 100%;
+    height: 273px;
+  }
 
-.card .card-body {
-  padding: 32px 25px 62px 25px;
-}
+  &-body {
+    padding: 32px 25px 62px 25px;
+  }
 
-.card-body .title {
-  padding: 0 0 32px;
+  &-title {
+    padding: 0 0 32px;
+  }
 }
 
 #recipes .badge {
@@ -228,6 +165,7 @@
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
+
 #recipes .container {
   padding-top: 5em;
   padding-bottom: 4em;
@@ -240,14 +178,17 @@
   gap: 25px;
   padding: 5px;
 }
+
 #recipes .ingredient {
   flex: 1 0 calc(50% - 21px);
 }
+
 #recipes .ingredient .name {
   font-size: 1.2rem;
   color: #1b1b1b;
   font-weight: 500;
 }
+
 #recipes .ingredient .quantity {
   font-size: 1.1rem;
   font-weight: 400;
