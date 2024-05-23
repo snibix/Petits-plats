@@ -8,55 +8,7 @@ export function filterTemplate(recipes) {
   const dropDowns = document.createElement("div");
   dropDowns.className = "dropdowns";
 
-  const dropDownIng = document.createElement("div");
-  dropDownIng.className = "dropdown";
-
-  const dropDownAp = document.createElement("div");
-  dropDownAp.className = "dropdown";
-
-  const dropDownUs = document.createElement("div");
-  dropDownUs.className = "dropdown";
-
-  const ingredientBtn = createButton("Ingredients");
-
-  const dropBtn2 = createButton("Appareils");
-
-  const dropBtn3 = createButton("Ustensiles");
-
-  const dropDownContent1 = document.createElement("div");
-  dropDownContent1.className = "dropdown-content";
-
-  const dropDownContent2 = document.createElement("div");
-  dropDownContent2.className = "dropdown-content";
-
-  const dropDownContent3 = document.createElement("div");
-  dropDownContent3.className = "dropdown-content";
-
-  const searchIngredient = document.createElement("input");
-  searchIngredient.type = "text";
-  searchIngredient.className = "drop-input";
-  searchIngredient.placeholder = "Rechercher";
-
-  const searchAppareil = document.createElement("input");
-  searchAppareil.type = "text";
-  searchAppareil.className = "drop-input";
-  searchAppareil.placeholder = "Rechercher";
-
-  const searchUsentiles = document.createElement("input");
-  searchUsentiles.type = "text";
-  searchUsentiles.className = "drop-input";
-  searchUsentiles.placeholder = "Rechercher";
-
-  const ingredientContent = document.createElement("div");
-  ingredientContent.id = "ingrédients";
-
-  const aplianceContent = document.createElement("div");
-  aplianceContent.id = "appareils";
-
-  const UsentilesContent = document.createElement("div");
-  UsentilesContent.id = "ustensiles";
-
-  // Pour éviter supprimer les répitions
+  // Pour éviter les répitions supprime les doublons
   const allIngredientsSet = new Set();
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((ingredient) => {
@@ -64,69 +16,68 @@ export function filterTemplate(recipes) {
     });
   });
 
-  // Convertir l'ensemble en tableau
-  const allIngredients = Array.from(allIngredientsSet);
-
-  allIngredients.forEach((ingredient) => {
-    const ingredientElement = document.createElement("a");
-    ingredientElement.href = "#"; // Lien fictif pour un fonctionnement correct du clic
-    ingredientElement.textContent = ingredient;
-    ingredientContent.appendChild(ingredientElement);
-  });
-
   const allAppareilSet = new Set();
   recipes.forEach((recipe) => {
     allAppareilSet.add(recipe.appliance);
   });
 
-  const allAppareil = Array.from(allAppareilSet);
-
-  allAppareil.forEach((appliance) => {
-    const applianceElement = document.createElement("a");
-    applianceElement.href = "#";
-    applianceElement.textContent = appliance;
-    aplianceContent.appendChild(applianceElement);
-  });
-
-  const allUstebsileSet = new Set();
+  const allUstensibleSet = new Set();
   recipes.forEach((recipe) => {
-    allUstebsileSet.add(recipe.ustensils);
+    allUstensibleSet.add(recipe.ustensils);
   });
 
-  const allUstebsile = Array.from(allUstebsileSet);
+  function createFilterDom(tab, name) {
+    const filterContainer = document.createElement("div");
+    filterContainer.className = "container";
 
-  allUstebsile.forEach((ustensils) => {
-    const ustensilesElement = document.createElement("a");
-    ustensilesElement.href = "#";
-    ustensilesElement.textContent = ustensils;
-    UsentilesContent.appendChild(ustensilesElement);
-  });
+    const filter = document.createElement("div");
+    filter.className = "filters";
+
+    const dropDowns = document.createElement("div");
+    dropDowns.className = "dropdowns";
+
+    const content = document.createElement("div");
+    content.id = name;
+
+    const dropDownContent = document.createElement("div");
+    dropDownContent.className = "dropdown-content";
+
+    const dropDown = document.createElement("div");
+    dropDown.className = "dropdown";
+
+    const btn = createButton(name);
+
+    const search = document.createElement("input");
+    search.type = "text";
+    search.className = "drop-input";
+    search.placeholder = "Rechercher";
+
+    const result = document.createElement("div");
+    result.className = "results";
+    result.textContent = "1500 recettes";
+
+    Array.from(tab).forEach((element) => {
+      const link = document.createElement("a");
+      link.href = "#";
+      link.textContent = element;
+      content.appendChild(link);
+    });
+    dropDownContent.appendChild(search);
+    dropDownContent.appendChild(content);
+
+    dropDown.appendChild(btn);
+    dropDown.appendChild(dropDownContent);
+
+    return dropDown;
+  }
 
   const result = document.createElement("div");
   result.className = "results";
   result.textContent = "1500 recettes";
 
-  dropDownContent1.appendChild(searchIngredient);
-  dropDownContent1.appendChild(ingredientContent);
-
-  dropDownContent2.appendChild(searchAppareil);
-  dropDownContent2.appendChild(aplianceContent);
-
-  dropDownContent3.appendChild(searchUsentiles);
-  dropDownContent3.appendChild(UsentilesContent);
-
-  dropDownIng.appendChild(ingredientBtn);
-  dropDownIng.appendChild(dropDownContent1);
-
-  dropDownAp.appendChild(dropBtn2);
-  dropDownAp.appendChild(dropDownContent2);
-
-  dropDownUs.appendChild(dropBtn3);
-  dropDownUs.appendChild(dropDownContent3);
-
-  dropDowns.appendChild(dropDownIng);
-  dropDowns.appendChild(dropDownAp);
-  dropDowns.appendChild(dropDownUs);
+  dropDowns.appendChild(createFilterDom(allIngredientsSet, "ingredient"));
+  dropDowns.appendChild(createFilterDom(allAppareilSet, "appareils"));
+  dropDowns.appendChild(createFilterDom(allUstensibleSet, "ustensible"));
 
   filter.appendChild(dropDowns);
   filter.appendChild(result);

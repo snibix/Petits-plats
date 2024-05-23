@@ -91,7 +91,7 @@ $primary-bg-color: #ededed; */
 #filters .container {
   display: flex;
   justify-content: space-between;
-  padding: 4rem 100px;
+  padding: 100px 4rem 0px;
   width: 100%;
 }
 
@@ -191,6 +191,26 @@ $primary-bg-color: #ededed; */
   color: #000;
 }
 
+.content-label-search {
+  display: flex;
+  padding: 1em 4rem;
+  gap: 15px;
+  align-items: start;
+}
+
+.label-search {
+  display: none;
+  /* display: flex; */
+  justify-content: space-between;
+  padding: 15px;
+  border: 1px solid;
+  border-color: #ffd15b;
+  border-radius: 10px;
+  z-index: 1;
+  min-width: 205px;
+  background-color: #ffd15b;
+}
+
 .cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -255,6 +275,7 @@ $primary-bg-color: #ededed; */
 }
 
 #recipes .container {
+  padding-top: 5em;
   padding-bottom: 4em;
 }
 
