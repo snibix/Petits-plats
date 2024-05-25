@@ -1,14 +1,13 @@
 .dropdown {
   position: relative;
   display: inline-block;
-  text-align: center;
 
   &-content {
     display: none;
     position: absolute;
     background-color: #fff;
-    min-width: 140px;
-    z-index: 1;
+    max-width: 213px;
+    z-index: 2;
     padding: 10px 16px;
     border: 1px solid #ccc;
     border-top: none;
@@ -28,16 +27,33 @@
     padding: 10px 20px;
     margin-bottom: 5px;
     width: 100%;
+
+    &-close {
+      position: absolute;
+      right: 3em;
+      top: 1.5em;
+      width: 10px;
+      height: 10px;
+      border: 1px;
+      z-index: 1;
+      cursor: pointer;
+    }
   }
 
   &-item {
     color: black;
     margin-top: 5px;
-    padding: 10px 12px 12px 0;
+    padding: 10px 12px 12px 5px;
     text-decoration: none;
+    text-transform: capitalize;
     display: block;
     text-align: left;
     background-color: #fff;
+    width: 100%;
+    font-family: Manrop;
+    &:hover {
+      background-color: #ffd15b;
+    }
   }
 
   &-button {
@@ -46,10 +62,12 @@
     background-color: #fff;
     border-radius: 0.8em;
     font-size: 1.3rem;
+    min-width: 213px;
     text-align: left;
     cursor: pointer;
     text-transform: capitalize;
-
+    font-family: Manrope;
+    position: relative;
     &::after {
       position: absolute;
       content: "";
@@ -71,5 +89,9 @@
   &.active &-button {
     border-bottom: none;
     border-radius: 0.8em 0.8em 0 0;
+    &::after {
+      background: no-repeat center / contain url(../../assets/img/up.svg)
+        transparent;
+    }
   }
 }

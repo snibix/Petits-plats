@@ -35,14 +35,13 @@ $primary-bg-color: #ededed; */
 .dropdown {
   position: relative;
   display: inline-block;
-  text-align: center;
 }
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #fff;
-  min-width: 140px;
-  z-index: 1;
+  max-width: 213px;
+  z-index: 2;
   padding: 10px 16px;
   border: 1px solid #ccc;
   border-top: none;
@@ -62,14 +61,30 @@ $primary-bg-color: #ededed; */
   margin-bottom: 5px;
   width: 100%;
 }
+.dropdown-search-close {
+  position: absolute;
+  right: 3em;
+  top: 1.5em;
+  width: 10px;
+  height: 10px;
+  border: 1px;
+  z-index: 1;
+  cursor: pointer;
+}
 .dropdown-item {
   color: black;
   margin-top: 5px;
-  padding: 10px 12px 12px 0;
+  padding: 10px 12px 12px 5px;
   text-decoration: none;
+  text-transform: capitalize;
   display: block;
   text-align: left;
   background-color: #fff;
+  width: 100%;
+  font-family: Manrop;
+}
+.dropdown-item:hover {
+  background-color: #ffd15b;
 }
 .dropdown-button {
   border: 1px solid #c6c6c6;
@@ -77,9 +92,12 @@ $primary-bg-color: #ededed; */
   background-color: #fff;
   border-radius: 0.8em;
   font-size: 1.3rem;
+  min-width: 213px;
   text-align: left;
   cursor: pointer;
   text-transform: capitalize;
+  font-family: Manrope;
+  position: relative;
 }
 .dropdown-button::after {
   position: absolute;
@@ -98,6 +116,48 @@ $primary-bg-color: #ededed; */
 .dropdown.active .dropdown-button {
   border-bottom: none;
   border-radius: 0.8em 0.8em 0 0;
+}
+.dropdown.active .dropdown-button::after {
+  background: no-repeat center/contain url(../../assets/img/up.svg) transparent;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0 102px;
+  gap: 66px 48px;
+  font-family: Manrope;
+}
+
+.card {
+  position: relative;
+  flex: 0;
+  flex-basis: 380px;
+  overflow: hidden;
+  border-radius: 21px;
+  background-color: #ffffff;
+  box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
+}
+.card-img {
+  object-fit: cover;
+  width: 100%;
+  height: 273px;
+}
+.card-body {
+  padding: 32px 25px 62px 25px;
+}
+.card-body-title {
+  padding: 0 0 32px;
+}
+.card-body-desc {
+  color: #1b1b1b;
+  font-size: 1.1em;
+  font-weight: 400;
+  overflow: hidden;
+  margin-bottom: 2em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 /* layout */
@@ -123,6 +183,7 @@ $primary-bg-color: #ededed; */
   text-transform: uppercase;
   margin-bottom: 29px;
   text-align: center;
+  font-weight: 400;
 }
 
 .form-search {
@@ -163,7 +224,7 @@ $primary-bg-color: #ededed; */
 #filters .container {
   display: flex;
   justify-content: space-between;
-  padding: 100px 4rem 0px;
+  padding: 80px 102px 0;
   width: 100%;
 }
 
@@ -175,7 +236,7 @@ $primary-bg-color: #ededed; */
 
 .dropdowns {
   display: flex;
-  gap: 30px;
+  gap: 50px;
 }
 
 .results {
@@ -207,34 +268,6 @@ $primary-bg-color: #ededed; */
   background-color: #ffd15b;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  padding: 0 102px;
-  gap: 66px 48px;
-}
-
-.card {
-  position: relative;
-  flex: 0;
-  flex-basis: 380px;
-  overflow: hidden;
-  border-radius: 21px;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 34px 30px rgba(0, 0, 0, 0.04);
-}
-.card-img {
-  object-fit: cover;
-  width: 100%;
-  height: 273px;
-}
-.card-body {
-  padding: 32px 25px 62px 25px;
-}
-.card-title {
-  padding: 0 0 32px;
-}
-
 #recipes .badge {
   top: 21px;
   right: 21px;
@@ -254,17 +287,6 @@ $primary-bg-color: #ededed; */
   font-weight: 700;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
-}
-
-.card-body .desc {
-  color: #1b1b1b;
-  font-size: 1.1em;
-  font-weight: 400;
-  overflow: hidden;
-  margin-bottom: 2em;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
 }
 
 #recipes .container {

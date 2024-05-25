@@ -3,7 +3,6 @@ import { transformNormalize } from "../utils/tools.js";
 function dropdownSearchUpdate(search, items) {
   search = transformNormalize(search.trim().toLowerCase());
   const links = items.querySelectorAll("a");
-
   if (search === "") {
     links.forEach((link) => {
       link.classList.remove("hidden");
@@ -17,6 +16,15 @@ function dropdownSearchUpdate(search, items) {
         link.classList.add("hidden");
       }
     });
+  }
+  console.log(search);
+}
+
+function viewClose(search, close) {
+  if (search === "") {
+    close.classList.add("hidden");
+  } else {
+    close.classList.remove("hidden");
   }
 }
 
@@ -40,9 +48,25 @@ function createFilterDom(name, tab) {
   dropdownSearch.type = "text";
   dropdownSearch.className = "dropdown-search";
   dropdownSearch.placeholder = "Rechercher";
+
+  const closeSearch = document.createElement("img");
+  closeSearch.src = "../../assets/img/close-gray.svg";
+  closeSearch.alt = "";
+  closeSearch.className = "dropdown-search-close hidden";
+
+  //Evenement qui recherche dans la liste en fonction de la recherche dans l'input
   dropdownSearch.addEventListener("input", (e) => {
     e.preventDefault();
     dropdownSearchUpdate(dropdownSearch.value, dropdownList);
+    viewClose(dropdownSearch.value, closeSearch);
+  });
+
+  //Evenement qui reset la recherche au click de la croix
+  closeSearch.addEventListener("click", (e) => {
+    e.preventDefault();
+    dropdownSearch.value = "";
+    dropdownSearchUpdate(dropdownSearch.value, dropdownList);
+    viewClose(dropdownSearch.value, closeSearch);
   });
 
   const dropdownList = document.createElement("div");
@@ -55,7 +79,7 @@ function createFilterDom(name, tab) {
     link.textContent = element;
     dropdownList.appendChild(link);
   });
-
+  dropDownContent.appendChild(closeSearch);
   dropDownContent.appendChild(dropdownSearch);
   dropDownContent.appendChild(dropdownList);
 
@@ -75,26 +99,37 @@ export function filterTemplate(recipes) {
   const dropdowns = document.createElement("div");
   dropdowns.className = "dropdowns";
 
-  // Pour éviter les répitions supprime les doublons
-  const allIngredientSet = new Set();
-  const allAppareilSet = new Set();
-  const allUstensileSet = new Set();
+  // Extraction de toutes les valeurs uniques
+  const allIngredients = [];
+  const allAppareils = [];
+  const allUstensiles = [];
 
   recipes.forEach((recipe) => {
     recipe.ingredients.forEach((ingredient) => {
-      allIngredientSet.add(ingredient.ingredient);
+      allIngredients.push(ingredient.ingredient.toLowerCase()); // Convertir en minuscules
     });
-    allAppareilSet.add(recipe.appliance);
-    allUstensileSet.add(recipe.ustensils);
+    allAppareils.push(recipe.appliance.toLowerCase()); // Convertir en minuscules
+    allUstensiles.push(...recipe.ustensils.map((u) => u.toLowerCase())); // Convertir en minuscules
   });
+
+  // Suppression des doublons et tri par ordre alphabétique
+  const uniqueIngredients = [...new Set(allIngredients)].sort((a, b) =>
+    a.localeCompare(b)
+  ); // Utilisation de localeCompare pour le tri insensible à la casse
+  const uniqueAppareils = [...new Set(allAppareils)].sort((a, b) =>
+    a.localeCompare(b)
+  ); // Utilisation de localeCompare pour le tri insensible à la casse
+  const uniqueUstensiles = [...new Set(allUstensiles)].sort((a, b) =>
+    a.localeCompare(b)
+  );
 
   const result = document.createElement("div");
   result.className = "results";
   result.textContent = `${recipes.length} recette(s)`;
 
-  dropdowns.appendChild(createFilterDom("ingredients", allIngredientSet));
-  dropdowns.appendChild(createFilterDom("appareils", allAppareilSet));
-  dropdowns.appendChild(createFilterDom("ustensiles", allUstensileSet));
+  dropdowns.appendChild(createFilterDom("ingredients", uniqueIngredients));
+  dropdowns.appendChild(createFilterDom("appareils", uniqueAppareils));
+  dropdowns.appendChild(createFilterDom("ustensiles", uniqueUstensiles));
 
   filters.appendChild(dropdowns);
   filters.appendChild(result);
@@ -103,6 +138,5 @@ export function filterTemplate(recipes) {
 
   return container;
 }
-// ajouter la croix a coter de l'input recherche , loupe cliclabe
-// verifier la conformite avec la maquette
+// voir pour terminer la fonctionnalité au click de reset input value la remettre a 0 , loupe cliclable
 // terminer les fonctionnalités ajout retrait tag , dropdown logo

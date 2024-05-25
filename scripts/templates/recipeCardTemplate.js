@@ -16,14 +16,14 @@ export function recipeCardTemplate(recipe) {
   body.className = "card-body";
 
   const recetteTitle = document.createElement("h2");
-  recetteTitle.className = "title";
+  recetteTitle.className = "card-body-title title";
   recetteTitle.textContent = recipe.name;
 
   const recettes = document.createElement("h3");
   recettes.textContent = "Recettes";
 
   const desc = document.createElement("p");
-  desc.className = "desc";
+  desc.className = "card-body-desc";
   desc.textContent = recipe.description;
 
   const ingredients = document.createElement("h3");
