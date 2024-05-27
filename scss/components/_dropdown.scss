@@ -8,7 +8,7 @@
     background-color: #fff;
     max-width: 213px;
     z-index: 2;
-    padding: 10px 16px;
+    padding: 10px 0px;
     border: 1px solid #ccc;
     border-top: none;
     border-radius: 0 0 8px 8px;
@@ -25,13 +25,13 @@
     background-color: transparent;
     border-color: #c6c6c6;
     padding: 10px 20px;
-    margin-bottom: 5px;
-    width: 100%;
+    margin: 5px 10px;
+    width: 90%;
 
     &-close {
       position: absolute;
       right: 3em;
-      top: 1.5em;
+      top: 1.9em;
       width: 10px;
       height: 10px;
       border: 1px;
@@ -43,7 +43,7 @@
   &-item {
     color: black;
     margin-top: 5px;
-    padding: 10px 12px 12px 5px;
+    padding: 10px 12px 12px 15px;
     text-decoration: none;
     text-transform: capitalize;
     display: block;
@@ -54,6 +54,18 @@
     &:hover {
       background-color: #ffd15b;
     }
+  }
+
+  &-link {
+    display: block;
+    padding: 1rem 1.5rem;
+    width: 100%;
+    text-transform: capitalize;
+    text-decoration: none;
+    color: black;
+    font-weight: 500;
+    background: no-repeat center right 1rem / 1.25em;
+    background-color: #ffd15b;
   }
 
   &-button {

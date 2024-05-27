@@ -78,6 +78,7 @@ function createFilterDom(name, tab) {
     link.className = "dropdown-item";
     link.textContent = element;
     dropdownList.appendChild(link);
+    addBadge(link);
   });
   dropDownContent.appendChild(closeSearch);
   dropDownContent.appendChild(dropdownSearch);
@@ -87,6 +88,27 @@ function createFilterDom(name, tab) {
   dropdown.appendChild(dropDownContent);
 
   return dropdown;
+}
+
+function addBadge(link) {
+  link.addEventListener("click", (event) => {
+    event.preventDefault();
+    link.className = "dropdown-link";
+    const containerBadge = document.querySelector(".content-label-search"); // Sélectionnez le bon conteneur
+    const contentBadge = document.createElement("div");
+    contentBadge.setAttribute("class", "label-search");
+    contentBadge.innerHTML = ` 
+      <p>${link.textContent}</p>
+      <img src="./assets/img/close-black.svg" alt="close" class="close-badge">
+    `;
+    containerBadge.appendChild(contentBadge);
+    console.log(containerBadge);
+    const closeButton = contentBadge.querySelector("img");
+    closeButton.addEventListener("click", () => {
+      link.className = "dropdown-item";
+      containerBadge.removeChild(contentBadge);
+    });
+  });
 }
 
 export function filterTemplate(recipes) {
@@ -108,8 +130,8 @@ export function filterTemplate(recipes) {
     recipe.ingredients.forEach((ingredient) => {
       allIngredients.push(ingredient.ingredient.toLowerCase()); // Convertir en minuscules
     });
-    allAppareils.push(recipe.appliance.toLowerCase()); // Convertir en minuscules
-    allUstensiles.push(...recipe.ustensils.map((u) => u.toLowerCase())); // Convertir en minuscules
+    allAppareils.push(recipe.appliance.toLowerCase());
+    allUstensiles.push(...recipe.ustensils.map((u) => u.toLowerCase()));
   });
 
   // Suppression des doublons et tri par ordre alphabétique

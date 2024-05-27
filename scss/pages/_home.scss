@@ -49,6 +49,7 @@
   border-radius: 0.625em;
   background: no-repeat center / 50% #000 url(../../assets/img/loup-white.svg);
   transition: all ease-in-out 0.3s;
+  cursor: pointer;
 }
 
 #filters {
@@ -86,14 +87,14 @@
 
 .content-label-search {
   display: flex;
-  padding: 1em 4rem;
-  gap: 15px;
+  flex-wrap: wrap;
+  padding: 1.5em 6.5rem;
+  gap: 30px;
   align-items: start;
 }
 
 .label-search {
-  display: none;
-  /* display: flex; */
+  display: flex;
   justify-content: space-between;
   padding: 15px;
   border: 1px solid;
@@ -102,6 +103,11 @@
   z-index: 1;
   min-width: 205px;
   background-color: #ffd15b;
+  text-transform: capitalize;
+}
+
+.label-search .close-badge {
+  cursor: pointer;
 }
 
 #recipes .badge {

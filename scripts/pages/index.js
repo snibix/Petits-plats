@@ -34,7 +34,6 @@ class App {
       recipe.card = card;
       cardSection.appendChild(card);
     }
-
     // Afficher les filtres
     this.renderFilters();
   }

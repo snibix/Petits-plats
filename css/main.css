@@ -31,6 +31,10 @@ $primary-bg-color: #ededed; */
   display: none !important;
 }
 
+.d-flex {
+  display: flex;
+}
+
 /* components */
 .dropdown {
   position: relative;
@@ -42,7 +46,7 @@ $primary-bg-color: #ededed; */
   background-color: #fff;
   max-width: 213px;
   z-index: 2;
-  padding: 10px 16px;
+  padding: 10px 0px;
   border: 1px solid #ccc;
   border-top: none;
   border-radius: 0 0 8px 8px;
@@ -58,13 +62,13 @@ $primary-bg-color: #ededed; */
   background-color: transparent;
   border-color: #c6c6c6;
   padding: 10px 20px;
-  margin-bottom: 5px;
-  width: 100%;
+  margin: 5px 10px;
+  width: 90%;
 }
 .dropdown-search-close {
   position: absolute;
   right: 3em;
-  top: 1.5em;
+  top: 1.9em;
   width: 10px;
   height: 10px;
   border: 1px;
@@ -74,7 +78,7 @@ $primary-bg-color: #ededed; */
 .dropdown-item {
   color: black;
   margin-top: 5px;
-  padding: 10px 12px 12px 5px;
+  padding: 10px 12px 12px 15px;
   text-decoration: none;
   text-transform: capitalize;
   display: block;
@@ -84,6 +88,17 @@ $primary-bg-color: #ededed; */
   font-family: Manrop;
 }
 .dropdown-item:hover {
+  background-color: #ffd15b;
+}
+.dropdown-link {
+  display: block;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  text-transform: capitalize;
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+  background: no-repeat center right 1rem/1.25em;
   background-color: #ffd15b;
 }
 .dropdown-button {
@@ -213,6 +228,7 @@ $primary-bg-color: #ededed; */
   border-radius: 0.625em;
   background: no-repeat center/50% #000 url(../../assets/img/loup-white.svg);
   transition: all ease-in-out 0.3s;
+  cursor: pointer;
 }
 
 #filters {
@@ -250,14 +266,14 @@ $primary-bg-color: #ededed; */
 
 .content-label-search {
   display: flex;
-  padding: 1em 4rem;
-  gap: 15px;
+  flex-wrap: wrap;
+  padding: 1.5em 6.5rem;
+  gap: 30px;
   align-items: start;
 }
 
 .label-search {
-  display: none;
-  /* display: flex; */
+  display: flex;
   justify-content: space-between;
   padding: 15px;
   border: 1px solid;
@@ -266,6 +282,11 @@ $primary-bg-color: #ededed; */
   z-index: 1;
   min-width: 205px;
   background-color: #ffd15b;
+  text-transform: capitalize;
+}
+
+.label-search .close-badge {
+  cursor: pointer;
 }
 
 #recipes .badge {
