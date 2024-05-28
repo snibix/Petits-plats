@@ -4,6 +4,10 @@ import { filterTemplate } from "../templates/filtersTemplate.js"; // Assurez-vou
 class App {
   constructor() {
     this.recipes = []; // Initialiser la propriété recipes
+    this.searchInput = document.getElementById("searchInput"); // Champ de recherche
+    this.filteredRecipes = []; // Propriété pour les recettes filtrées
+
+    this.searchInput.addEventListener("input", () => this.handleSearch()); // Écouteur d'événements pour la recherche
   }
 
   // Chargement des données
@@ -31,11 +35,39 @@ class App {
 
     for (const recipe of this.recipes) {
       const card = recipeCardTemplate(recipe);
-      recipe.card = card;
+      card.dataset.name = recipe.name.toLowerCase();
+      card.dataset.ingredients = recipe.ingredients
+        .map((ingredient) => {
+          if (typeof ingredient === "string") {
+            return ingredient.toLowerCase();
+          }
+        })
+        .join(" ");
+      card.dataset.description = recipe.description.toLowerCase();
       cardSection.appendChild(card);
     }
-    // Afficher les filtres
+
     this.renderFilters();
+  }
+
+  handleSearch() {
+    const query = this.searchInput.value.toLowerCase();
+
+    const cardSection = document.querySelector(".container .cards");
+    const cards = cardSection.querySelectorAll(".card");
+
+    cards.forEach((card) => {
+      const matches =
+        card.dataset.name.includes(query) ||
+        card.dataset.ingredients.includes(query) ||
+        card.dataset.description.includes(query);
+
+      if (matches) {
+        card.classList.remove("hidden");
+      } else {
+        card.classList.add("hidden");
+      }
+    });
   }
 }
 

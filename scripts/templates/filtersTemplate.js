@@ -50,7 +50,7 @@ function createFilterDom(name, tab) {
   dropdownSearch.placeholder = "Rechercher";
 
   const closeSearch = document.createElement("img");
-  closeSearch.src = "../../assets/img/close-gray.svg";
+  closeSearch.src = "assets/img/close-gray.svg";
   closeSearch.alt = "";
   closeSearch.className = "dropdown-search-close hidden";
 
