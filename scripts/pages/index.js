@@ -1,6 +1,7 @@
 import { recipeCardTemplate } from "../templates/recipeCardTemplate.js";
 import { filterTemplate } from "../templates/filtersTemplate.js";
 import { viewClose } from "../utils/viewClose.js";
+import { transformNormalize } from "../utils/tools.js";
 
 class App {
   constructor() {
@@ -38,7 +39,7 @@ class App {
 
     for (const recipe of this.recipes) {
       const card = recipeCardTemplate(recipe);
-      card.dataset.name = recipe.name.toLowerCase();
+      card.dataset.name = transformNormalize(recipe.name.toLowerCase());
       card.dataset.ingredients = recipe.ingredients
         .map((ingredient) => {
           if (typeof ingredient === "string") {
@@ -46,7 +47,9 @@ class App {
           }
         })
         .join(" ");
-      card.dataset.description = recipe.description.toLowerCase();
+      card.dataset.description = transformNormalize(
+        recipe.description.toLowerCase()
+      );
       cardSection.appendChild(card);
     }
 
@@ -54,7 +57,7 @@ class App {
   }
 
   handleSearch() {
-    const query = this.searchInput.value.toLowerCase();
+    const query = transformNormalize(this.searchInput.value.toLowerCase());
 
     const cardSection = document.querySelector(".container .cards");
     const cards = cardSection.querySelectorAll(".card");
