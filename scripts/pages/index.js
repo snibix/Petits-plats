@@ -1,13 +1,16 @@
 import { recipeCardTemplate } from "../templates/recipeCardTemplate.js";
-import { filterTemplate } from "../templates/filtersTemplate.js"; // Assurez-vous d'importer le filterTemplate
+import { filterTemplate } from "../templates/filtersTemplate.js";
+import { viewClose } from "../utils/viewClose.js";
 
 class App {
   constructor() {
     this.recipes = []; // Initialiser la propriété recipes
-    this.searchInput = document.getElementById("searchInput"); // Champ de recherche
+    this.searchInput = document.getElementById("searchInput");
+    this.closeSearch = document.getElementById("closeSearch");
     this.filteredRecipes = []; // Propriété pour les recettes filtrées
 
     this.searchInput.addEventListener("input", () => this.handleSearch()); // Écouteur d'événements pour la recherche
+    this.closeSearch.addEventListener("click", () => this.clearSearch()); // Écouteur d'événements pour la croix de fermeture
   }
 
   // Chargement des données
@@ -23,7 +26,7 @@ class App {
   // Méthode pour créer et afficher les filtres
   renderFilters() {
     const filterSection = document.querySelector("#filters");
-    const filters = filterTemplate(this.recipes); // Assurez-vous que filterTemplate renvoie les filtres nécessaires
+    const filters = filterTemplate(this.recipes);
 
     filterSection.innerHTML = ""; // Vider la section des filtres avant de la remplir
     filterSection.appendChild(filters);
@@ -68,6 +71,14 @@ class App {
         card.classList.add("hidden");
       }
     });
+
+    viewClose(query, this.closeSearch);
+  }
+
+  clearSearch() {
+    this.searchInput.value = "";
+    this.handleSearch();
+    this.render(); // Re-rendre toutes les recettes
   }
 }
 

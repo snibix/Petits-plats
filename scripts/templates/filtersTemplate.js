@@ -20,14 +20,6 @@ function dropdownSearchUpdate(search, items) {
   console.log(search);
 }
 
-function viewClose(search, close) {
-  if (search === "") {
-    close.classList.add("hidden");
-  } else {
-    close.classList.remove("hidden");
-  }
-}
-
 function createFilterDom(name, tab) {
   const dropdown = document.createElement("div");
   dropdown.className = "dropdown";
