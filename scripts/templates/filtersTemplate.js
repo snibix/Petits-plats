@@ -85,8 +85,29 @@ function createFilterDom(name, tab) {
 function addBadge(link) {
   link.addEventListener("click", (event) => {
     event.preventDefault();
-    link.className = "dropdown-link";
+
     const containerBadge = document.querySelector(".content-label-search"); // Sélectionnez le bon conteneur
+
+    // Vérifie si le lien est déjà sélectionné
+    if (link.classList.contains("dropdown-link")) {
+      link.classList.remove("dropdown-link");
+      link.classList.add("dropdown-item");
+
+      // Trouve et supprime le badge correspondant
+      const existingBadge = Array.from(containerBadge.children).find(
+        (badge) => badge.textContent.trim() === link.textContent.trim()
+      );
+      if (existingBadge) {
+        containerBadge.removeChild(existingBadge);
+      }
+      return;
+    }
+
+    // Sélectionne le lien
+    link.classList.add("dropdown-link");
+    link.classList.remove("dropdown-item");
+
+    // Crée et ajoute le nouveau badge
     const contentBadge = document.createElement("div");
     contentBadge.setAttribute("class", "label-search");
     contentBadge.innerHTML = ` 
@@ -94,14 +115,21 @@ function addBadge(link) {
       <img src="./assets/img/close-black.svg" alt="close" class="close-badge">
     `;
     containerBadge.appendChild(contentBadge);
-    console.log(containerBadge);
+
     const closeButton = contentBadge.querySelector("img");
     closeButton.addEventListener("click", () => {
-      link.className = "dropdown-item";
+      link.classList.remove("dropdown-link");
+      link.classList.add("dropdown-item");
       containerBadge.removeChild(contentBadge);
     });
   });
 }
+
+// Ajoutez cette ligne pour chaque lien de votre liste
+document.querySelectorAll(".dropdown-item").forEach(addBadge);
+
+// Ajoutez cette ligne pour chaque lien de votre liste
+document.querySelectorAll(".dropdown-item").forEach(addBadge);
 
 export function filterTemplate(recipes) {
   const container = document.createElement("div");
@@ -152,5 +180,4 @@ export function filterTemplate(recipes) {
 
   return container;
 }
-// voir pour terminer la fonctionnalité au click de reset input value la remettre a 0 , loupe cliclable
-// terminer les fonctionnalités ajout retrait tag , dropdown logo
+// terminer les fonctionnalités ajout retrait tag

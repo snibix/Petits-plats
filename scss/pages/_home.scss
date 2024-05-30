@@ -1,6 +1,6 @@
 .header {
   background: no-repeat center / cover
-    url(../../assets/img/lampos-aritonang-24gR_9lCdes-unsplash1.jpg);
+    url(../assets/img/lampos-aritonang-24gR_9lCdes-unsplash1.jpg);
   padding-bottom: 133px;
   &__top {
     display: flex;
@@ -47,12 +47,11 @@
   border: none;
   outline: 0;
   border-radius: 0.625em;
-  background: no-repeat center / 50% #000 url(../../assets/img/loup-white.svg);
+  background: no-repeat center / 50% #000 url(../assets/img/loup-white.svg);
   transition: all ease-in-out 0.3s;
   cursor: pointer;
   &:hover {
-    background: no-repeat center / 50% #ffd15b
-      url(../../assets/img/loup-black.svg);
+    background: no-repeat center / 50% #ffd15b url(../assets/img/loup-black.svg);
   }
 }
 .btn-clear {
@@ -64,7 +63,7 @@
   border: none;
   outline: 0;
   border-radius: 0.625em;
-  background: no-repeat center / 30% url(../../assets/img/close-gray.svg);
+  background: no-repeat center / 30% url(../assets/img/close-gray.svg);
   cursor: pointer;
 }
 

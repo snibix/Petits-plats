@@ -56,7 +56,7 @@ $primary-bg-color: #ededed; */
 .dropdown-search {
   text-align: left;
   font-size: 0.9em;
-  background-image: url(../../assets/img/loup-gray.svg);
+  background-image: url(../assets/img/loup-gray.svg);
   background-position: center right 11px;
   background-repeat: no-repeat;
   background-color: transparent;
@@ -117,7 +117,7 @@ $primary-bg-color: #ededed; */
 .dropdown-button::after {
   position: absolute;
   content: "";
-  background: no-repeat center/contain url(../../assets/img/down.svg) transparent;
+  background: no-repeat center/contain url(../assets/img/down.svg) transparent;
   width: 1em;
   height: 1em;
   top: 50%;
@@ -133,7 +133,7 @@ $primary-bg-color: #ededed; */
   border-radius: 0.8em 0.8em 0 0;
 }
 .dropdown.active .dropdown-button::after {
-  background: no-repeat center/contain url(../../assets/img/up.svg) transparent;
+  background: no-repeat center/contain url(../assets/img/up.svg) transparent;
 }
 
 .cards {
@@ -178,7 +178,7 @@ $primary-bg-color: #ededed; */
 /* layout */
 /* pages */
 .header {
-  background: no-repeat center/cover url(../../assets/img/lampos-aritonang-24gR_9lCdes-unsplash1.jpg);
+  background: no-repeat center/cover url(../assets/img/lampos-aritonang-24gR_9lCdes-unsplash1.jpg);
   padding-bottom: 133px;
 }
 .header__top {
@@ -226,12 +226,12 @@ $primary-bg-color: #ededed; */
   border: none;
   outline: 0;
   border-radius: 0.625em;
-  background: no-repeat center/50% #000 url(../../assets/img/loup-white.svg);
+  background: no-repeat center/50% #000 url(../assets/img/loup-white.svg);
   transition: all ease-in-out 0.3s;
   cursor: pointer;
 }
 .btn-search:hover {
-  background: no-repeat center/50% #ffd15b url(../../assets/img/loup-black.svg);
+  background: no-repeat center/50% #ffd15b url(../assets/img/loup-black.svg);
 }
 
 .btn-clear {
@@ -243,7 +243,7 @@ $primary-bg-color: #ededed; */
   border: none;
   outline: 0;
   border-radius: 0.625em;
-  background: no-repeat center/30% url(../../assets/img/close-gray.svg);
+  background: no-repeat center/30% url(../assets/img/close-gray.svg);
   cursor: pointer;
 }
 
