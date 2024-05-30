@@ -17,7 +17,6 @@ function dropdownSearchUpdate(search, items) {
       }
     });
   }
-  console.log(search);
 }
 
 function createFilterDom(name, tab) {
@@ -42,7 +41,7 @@ function createFilterDom(name, tab) {
   dropdownSearch.placeholder = "Rechercher";
 
   const closeSearch = document.createElement("img");
-  closeSearch.src = "../assets/img/close-gray.svg";
+  closeSearch.src = "./assets/img/close-gray.svg";
   closeSearch.alt = "";
   closeSearch.className = "dropdown-search-close hidden";
 
@@ -50,7 +49,7 @@ function createFilterDom(name, tab) {
   dropdownSearch.addEventListener("input", (e) => {
     e.preventDefault();
     dropdownSearchUpdate(dropdownSearch.value, dropdownList);
-    viewClose(dropdownSearch.value, closeSearch);
+    closeSearch.classList.toggle("hidden", dropdownSearch.value === "");
   });
 
   //Evenement qui reset la recherche au click de la croix
@@ -58,11 +57,12 @@ function createFilterDom(name, tab) {
     e.preventDefault();
     dropdownSearch.value = "";
     dropdownSearchUpdate(dropdownSearch.value, dropdownList);
-    viewClose(dropdownSearch.value, closeSearch);
+    closeSearch.classList.toggle("hidden", dropdownSearch.value === "");
   });
 
   const dropdownList = document.createElement("div");
   dropdownList.id = name;
+  dropdownList.className = "dropdown-list";
 
   Array.from(tab).forEach((element) => {
     const link = document.createElement("a");

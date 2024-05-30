@@ -1,6 +1,5 @@
 import { recipeCardTemplate } from "../templates/recipeCardTemplate.js";
 import { filterTemplate } from "../templates/filtersTemplate.js";
-import { viewClose } from "../utils/viewClose.js";
 import { transformNormalize } from "../utils/tools.js";
 
 class App {
@@ -10,7 +9,7 @@ class App {
     this.closeSearch = document.getElementById("closeSearch");
     this.filteredRecipes = []; // Propriété pour les recettes filtrées
 
-    this.searchInput.addEventListener("input", () => this.handleSearch()); // Écouteur d'événements pour la recherche
+    this.searchInput.addEventListener("input", this.handleSearch.bind(this)); // Écouteur d'événements pour la recherche
     this.closeSearch.addEventListener("click", () => this.clearSearch()); // Écouteur d'événements pour la croix de fermeture
   }
 
@@ -39,17 +38,6 @@ class App {
 
     for (const recipe of this.recipes) {
       const card = recipeCardTemplate(recipe);
-      card.dataset.name = transformNormalize(recipe.name.toLowerCase());
-      card.dataset.ingredients = recipe.ingredients
-        .map((ingredient) => {
-          if (typeof ingredient === "string") {
-            return ingredient.toLowerCase();
-          }
-        })
-        .join(" ");
-      card.dataset.description = transformNormalize(
-        recipe.description.toLowerCase()
-      );
       cardSection.appendChild(card);
     }
 
@@ -59,24 +47,10 @@ class App {
   handleSearch() {
     const query = transformNormalize(this.searchInput.value.toLowerCase());
 
-    const cardSection = document.querySelector(".container .cards");
-    const cards = cardSection.querySelectorAll(".card");
-
-    cards.forEach((card) => {
-      const matches =
-        card.dataset.name.includes(query) ||
-        card.dataset.ingredients.includes(query) ||
-        card.dataset.description.includes(query);
-
-      if (matches) {
-        card.classList.remove("hidden");
-      } else {
-        card.classList.add("hidden");
-      }
-    });
-
-    viewClose(query, this.closeSearch);
+    this.closeSearch.classList.toggle("hidden", query === "");
   }
+
+  updateMainSearch(search) {}
 
   clearSearch() {
     this.searchInput.value = "";
@@ -87,3 +61,4 @@ class App {
 
 const app = new App();
 app.run();
+console.log(app.updateMainSearch("ail"));

@@ -1,6 +1,6 @@
 body {
   position: relative;
-
+  font-family: Manrope;
   font-size: 1.6rem;
   width: 100%;
 }
@@ -17,7 +17,7 @@ input {
   font: inherit;
 
   &:focus {
-    outline: 1px solid #c6c6c6;
+    outline: #c6c6c6;
   }
 
   &:active {
