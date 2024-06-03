@@ -9,7 +9,7 @@ function dropdownSearchUpdate(search, items) {
     });
   } else {
     links.forEach((link) => {
-      const textContent = transformNormalize(link.textContent.toLowerCase());
+      const textContent = transformNormalize(link.textContent);
       link.classList.toggle("filtered", !textContent.includes(search));
     });
   }
