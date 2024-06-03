@@ -160,9 +160,10 @@ class App {
   }
 
   updateMainSearch(search) {
-    const results = [];
     search = transformNormalize(search.toLowerCase());
-    this.recipes.forEach((recipe) => {
+    // TODO: sépare le texte dans search en tableau de mots
+    this.mainFilters = this.recipes.filter((recipe) => {
+      // TODO: recherche par groupe de lettre
       const found = recipe.ingredients.some((ingredient) => {
         return transformNormalize(ingredient.ingredient)
           .toLowerCase()
@@ -174,10 +175,10 @@ class App {
         found ||
         transformNormalize(recipe.description.toLowerCase()).includes(search)
       ) {
-        results.push(recipe);
+        return true;
       }
+      return false;
     });
-    this.mainFilters = results;
     this.renderRecipes();
   }
 
@@ -190,3 +191,7 @@ class App {
 
 const app = new App();
 await app.run();
+
+// TODO:  loupe  de recherhe au click lance la recherche
+// TODO : la recherche commence a 3 caractere minimum
+// TODO : dropdown au click exterieur doit se ferme
