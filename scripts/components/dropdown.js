@@ -141,3 +141,12 @@ export function createDropdownDOM(name, list, tagEvent) {
 
   return dropdown;
 }
+
+export function updateDropdown(name, list) {
+  const dropdownIngredientItems = document.querySelectorAll(
+    `#${name} .dropdown-item`
+  );
+  dropdownIngredientItems.forEach((item) => {
+    item.classList.toggle("hidden", !list.includes(item.textContent));
+  });
+}

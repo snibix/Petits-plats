@@ -1,6 +1,7 @@
 import { recipeCardTemplate } from "../templates/recipeCardTemplate.js";
 import { filterTemplate } from "../templates/filtersTemplate.js";
 import { transformNormalize } from "../utils/tools.js";
+import { updateDropdown } from "../components/dropdown.js";
 
 class App {
   constructor() {
@@ -84,9 +85,9 @@ class App {
     );
 
     const [ingredients, appliances, ustensils] = this.getAllCategories(recipes);
-    this.updateDropdown("ingredients", ingredients);
-    this.updateDropdown("appareils", appliances);
-    this.updateDropdown("ustensiles", ustensils);
+    updateDropdown("ingredients", ingredients);
+    updateDropdown("appareils", appliances);
+    updateDropdown("ustensiles", ustensils);
 
     const cardSection = document.querySelector(".container .cards");
     cardSection.innerHTML = ""; // Vider la section des cartes avant de la remplir
@@ -99,15 +100,6 @@ class App {
     document.querySelector(
       "#recipe-counter"
     ).textContent = `${recipes.length} recette(s)`;
-  }
-
-  updateDropdown(name, list) {
-    const dropdownIngredientItems = document.querySelectorAll(
-      `#${name} .dropdown-item`
-    );
-    dropdownIngredientItems.forEach((item) => {
-      item.classList.toggle("hidden", !list.includes(item.textContent));
-    });
   }
 
   handleSearch() {
