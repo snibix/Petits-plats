@@ -5,23 +5,20 @@ function dropdownSearchUpdate(search, items) {
   const links = items.querySelectorAll("a");
   if (search === "") {
     links.forEach((link) => {
-      link.classList.remove("hidden");
+      link.classList.remove("filtered");
     });
   } else {
     links.forEach((link) => {
       const textContent = transformNormalize(link.textContent.toLowerCase());
-      if (textContent.includes(search)) {
-        link.classList.remove("hidden");
-      } else {
-        link.classList.add("hidden");
-      }
+      link.classList.toggle("filtered", !textContent.includes(search));
     });
   }
 }
 
-function createFilterDom(name, tab) {
+function createFilterDom(name, list, tagEvent) {
   const dropdown = document.createElement("div");
   dropdown.className = "dropdown";
+  dropdown.dataset.name = name;
 
   const dropdownButton = document.createElement("button");
   dropdownButton.className = "dropdown-button";
@@ -64,14 +61,26 @@ function createFilterDom(name, tab) {
   dropdownList.id = name;
   dropdownList.className = "dropdown-list";
 
-  Array.from(tab).forEach((element) => {
+  const tags = document.querySelector(".content-tags-search"); // Sélectionnez le bon conteneur
+
+  list.forEach((element) => {
     const link = document.createElement("a");
     link.href = "#";
     link.className = "dropdown-item";
     link.textContent = element;
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      // Vérifie si le lien est déjà sélectionné
+      if (link.classList.contains("dropdown-selected")) {
+        removeTag(link, null, tags);
+      } else {
+        addTag(link, tags, tagEvent);
+      }
+      tagEvent();
+    });
     dropdownList.appendChild(link);
-    addBadge(link);
   });
+
   dropDownContent.appendChild(closeSearch);
   dropDownContent.appendChild(dropdownSearch);
   dropDownContent.appendChild(dropdownList);
@@ -82,56 +91,58 @@ function createFilterDom(name, tab) {
   return dropdown;
 }
 
-function addBadge(link) {
-  link.addEventListener("click", (event) => {
-    event.preventDefault();
+function removeTag(link, tag, tags) {
+  link.classList.remove("dropdown-selected");
 
-    const containerBadge = document.querySelector(".content-label-search"); // Sélectionnez le bon conteneur
+  if (tag === null) {
+    const category = link.closest(".dropdown").dataset.name;
 
-    // Vérifie si le lien est déjà sélectionné
-    if (link.classList.contains("dropdown-link")) {
-      link.classList.remove("dropdown-link");
-      link.classList.add("dropdown-item");
+    const tagList = tags.querySelectorAll(".tag-search");
 
-      // Trouve et supprime le badge correspondant
-      const existingBadge = Array.from(containerBadge.children).find(
-        (badge) => badge.textContent.trim() === link.textContent.trim()
-      );
-      if (existingBadge) {
-        containerBadge.removeChild(existingBadge);
+    for (let i = tagList.length - 1; i >= 0; i--) {
+      const item = tagList[i];
+      if (
+        item.textContent.trim() === link.textContent.trim() &&
+        item.dataset.category === category
+      ) {
+        tag = item;
+        break;
       }
-      return;
     }
+  }
+  tag?.remove();
+}
 
-    // Sélectionne le lien
-    link.classList.add("dropdown-link");
-    link.classList.remove("dropdown-item");
+function addTag(link, tags, tagEvent) {
+  // Sélectionne le lien
+  link.classList.add("dropdown-selected");
 
-    // Crée et ajoute le nouveau badge
-    const contentBadge = document.createElement("div");
-    contentBadge.setAttribute("class", "label-search");
-    contentBadge.innerHTML = ` 
-      <p>${link.textContent}</p>
-      <img src="./assets/img/close-black.svg" alt="close" class="close-badge">
-    `;
-    containerBadge.appendChild(contentBadge);
+  // Crée et ajoute le nouveau badge
+  const contentTag = document.createElement("div");
+  contentTag.className = "tag-search";
+  contentTag.dataset.category = link.closest(".dropdown").dataset.name;
 
-    const closeButton = contentBadge.querySelector("img");
-    closeButton.addEventListener("click", () => {
-      link.classList.remove("dropdown-link");
-      link.classList.add("dropdown-item");
-      containerBadge.removeChild(contentBadge);
-    });
+  const contentText = document.createElement("p");
+  contentText.textContent = link.textContent;
+
+  const contentClose = document.createElement("img");
+  contentClose.src = "./assets/img/close-black.svg";
+  contentClose.className = "close-badge";
+  contentClose.alt = "close";
+
+  contentTag.appendChild(contentText);
+  contentTag.appendChild(contentClose);
+
+  tags.appendChild(contentTag);
+
+  contentClose.addEventListener("click", (e) => {
+    e.preventDefault();
+    removeTag(link, contentTag, tags);
+    tagEvent();
   });
 }
 
-// Ajoutez cette ligne pour chaque lien de votre liste
-document.querySelectorAll(".dropdown-item").forEach(addBadge);
-
-// Ajoutez cette ligne pour chaque lien de votre liste
-document.querySelectorAll(".dropdown-item").forEach(addBadge);
-
-export function filterTemplate(recipes) {
+export function filterTemplate(ingredients, appliances, ustensils, tagEvent) {
   const container = document.createElement("div");
   container.className = "container";
 
@@ -141,43 +152,21 @@ export function filterTemplate(recipes) {
   const dropdowns = document.createElement("div");
   dropdowns.className = "dropdowns";
 
-  // Extraction de toutes les valeurs uniques
-  const allIngredients = [];
-  const allAppareils = [];
-  const allUstensiles = [];
+  // TODO
 
-  recipes.forEach((recipe) => {
-    recipe.ingredients.forEach((ingredient) => {
-      allIngredients.push(ingredient.ingredient.toLowerCase()); // Convertir en minuscules
-    });
-    allAppareils.push(recipe.appliance.toLowerCase());
-    allUstensiles.push(...recipe.ustensils.map((u) => u.toLowerCase()));
-  });
+  const results = document.createElement("div");
+  results.id = "recipe-counter";
+  results.className = "results";
+  results.textContent = `Aucune recette`;
 
-  // Suppression des doublons et tri par ordre alphabétique
-  const uniqueIngredients = [...new Set(allIngredients)].sort((a, b) =>
-    a.localeCompare(b)
-  ); // Utilisation de localeCompare pour le tri insensible à la casse
-  const uniqueAppareils = [...new Set(allAppareils)].sort((a, b) =>
-    a.localeCompare(b)
-  ); // Utilisation de localeCompare pour le tri insensible à la casse
-  const uniqueUstensiles = [...new Set(allUstensiles)].sort((a, b) =>
-    a.localeCompare(b)
-  );
-
-  const result = document.createElement("div");
-  result.className = "results";
-  result.textContent = `${recipes.length} recette(s)`;
-
-  dropdowns.appendChild(createFilterDom("ingredients", uniqueIngredients));
-  dropdowns.appendChild(createFilterDom("appareils", uniqueAppareils));
-  dropdowns.appendChild(createFilterDom("ustensiles", uniqueUstensiles));
+  dropdowns.appendChild(createFilterDom("ingredients", ingredients, tagEvent));
+  dropdowns.appendChild(createFilterDom("appareils", appliances, tagEvent));
+  dropdowns.appendChild(createFilterDom("ustensiles", ustensils, tagEvent));
 
   filters.appendChild(dropdowns);
-  filters.appendChild(result);
+  filters.appendChild(results);
 
   container.appendChild(filters);
 
   return container;
 }
-// terminer les fonctionnalités ajout retrait tag

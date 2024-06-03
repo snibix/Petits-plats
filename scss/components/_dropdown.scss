@@ -31,7 +31,7 @@
     &-close {
       position: absolute;
       right: 2em;
-      top: 1.2em;
+      top: 1.3em;
       width: 10px;
       height: 10px;
       border: 1px;
@@ -60,18 +60,11 @@
     }
   }
 
-  &-link {
-    display: block;
-    padding: 10px 12px 12px 15px;
-    width: 100%;
-    text-transform: capitalize;
-    text-decoration: none;
-    color: black;
+  &-selected {
     font-weight: 600;
     background: no-repeat center right 1.5rem
       url(../assets/img/close-circle-solid.svg);
     background-color: #ffd15b;
-    font-size: 0.7em;
   }
 
   &-button {
