@@ -12,12 +12,6 @@ class App {
     this.appliances = []; // Liste des appareils
     this.ingredients = []; // Liste des ingredients
     this.ustensils = []; // Liste des ustensiles
-
-    this.searchInput = document.getElementById("searchInput");
-    this.closeSearch = document.getElementById("closeSearch");
-
-    this.searchInput.addEventListener("input", this.handleSearch.bind(this)); // Écouteur d'événements pour la recherche
-    this.closeSearch.addEventListener("click", () => this.clearSearch()); // Écouteur d'événements pour la croix de fermeture
   }
 
   // Chargement des données
@@ -25,7 +19,6 @@ class App {
     this.recipes = await fetch(url).then((res) => res.json());
   }
 
-  //
   getAllCategories(recipes) {
     const allIngredients = [];
     const allAppareils = [];
@@ -55,11 +48,18 @@ class App {
     this.tagFilters = this.recipes;
   }
 
-  async run() {
-    await this.load("./data/recipes.json");
-    this.prepare();
-    this.renderFilters();
-    this.render();
+  renderHeader() {
+    const mainSearch = document.getElementById("main-search");
+    mainSearch.addEventListener("input", (e) => {
+      this.updateMainSearch(e.target.value);
+    });
+    document
+      .getElementById("close-main-search")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        mainSearch.value = "";
+        this.updateMainSearch("");
+      }); // boutton de reset;
   }
 
   // Méthode pour créer et afficher les filtres
@@ -78,7 +78,7 @@ class App {
     filterSection.appendChild(filters);
   }
 
-  render() {
+  renderRecipes() {
     // intersection des 2 tableaux de recette filtré
     const recipes = this.mainFilters.filter((recipe) =>
       this.tagFilters.includes(recipe)
@@ -102,10 +102,10 @@ class App {
     ).textContent = `${recipes.length} recette(s)`;
   }
 
-  handleSearch() {
-    const query = this.searchInput.value;
-    this.closeSearch.classList.toggle("hidden", query === "");
-    this.updateMainSearch(query);
+  render() {
+    this.renderHeader();
+    this.renderFilters();
+    this.renderRecipes();
   }
 
   updateTagSearch() {
@@ -156,7 +156,7 @@ class App {
 
       return filtered;
     });
-    this.render();
+    this.renderRecipes();
   }
 
   updateMainSearch(search) {
@@ -178,12 +178,13 @@ class App {
       }
     });
     this.mainFilters = results;
-    this.render();
+    this.renderRecipes();
   }
 
-  clearSearch() {
-    this.searchInput.value = "";
-    this.handleSearch();
+  async run() {
+    await this.load("./data/recipes.json");
+    this.prepare();
+    this.render();
   }
 }
 

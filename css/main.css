@@ -256,6 +256,9 @@ $primary-bg-color: #ededed; */
   border-radius: 0.6875em;
   box-sizing: border-box;
 }
+.input-search:placeholder-shown ~ .btn-clear {
+  display: none;
+}
 
 .btn-search {
   position: absolute;
