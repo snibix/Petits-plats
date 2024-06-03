@@ -26,10 +26,10 @@ class App {
 
     recipes.forEach((recipe) => {
       recipe.ingredients.forEach((ingredient) => {
-        allIngredients.push(ingredient.ingredient.toLowerCase()); // Convertir en minuscules
+        allIngredients.push(ingredient.ingredient);
       });
-      allAppareils.push(recipe.appliance.toLowerCase());
-      allUstensiles.push(...recipe.ustensils.map((u) => u.toLowerCase()));
+      allAppareils.push(recipe.appliance);
+      allUstensiles.push(...recipe.ustensils);
     });
 
     return [
@@ -40,6 +40,16 @@ class App {
   }
 
   prepare() {
+    this.recipes.forEach((recipe) => {
+      recipe.ingredients = recipe.ingredients.map((ingredient) => {
+        ingredient.ingredient = ingredient.ingredient.toLowerCase();
+        return ingredient;
+      });
+      recipe.appliance = recipe.appliance.toLowerCase();
+      recipe.ustensils = recipe.ustensils.map((ustensil) =>
+        ustensil.toLowerCase()
+      );
+    });
     [this.ingredients, this.appliances, this.ustensils] = this.getAllCategories(
       this.recipes
     );
@@ -108,66 +118,14 @@ class App {
     this.renderRecipes();
   }
 
-  updateTagSearch() {
-    const tags = document.querySelector(".content-tags-search");
-
-    const ingredients = Array.from(
-      tags.querySelectorAll('[data-category="ingredients"]')
-    ).map((item) => item.textContent);
-
-    const appareils = Array.from(
-      tags.querySelectorAll('[data-category="appareils"]')
-    ).map((item) => item.textContent);
-
-    const ustensiles = Array.from(
-      tags.querySelectorAll('[data-category="ustensiles"]')
-    ).map((item) => item.textContent);
-
-    this.tagFilters = this.recipes.filter((recipe) => {
-      let filtered = true;
-      if (
-        appareils.length > 0 &&
-        !appareils.includes(recipe.appliance.toLowerCase())
-      ) {
-        filtered = false;
-      }
-
-      if (
-        ustensiles.length > 0 &&
-        !ustensiles.every((item) => {
-          return recipe.ustensils.includes(item);
-        })
-      ) {
-        filtered = false;
-      }
-
-      if (
-        ingredients.length > 0 &&
-        !ingredients.every((item) => {
-          return (
-            recipe.ingredients.find(
-              (img) => img.ingredient.toLowerCase() === item
-            ) !== undefined
-          );
-        })
-      ) {
-        filtered = false;
-      }
-
-      return filtered;
-    });
-    this.renderRecipes();
-  }
-
   updateMainSearch(search) {
+    // TODO : la recherche commence a 3 caractere minimum
     search = transformNormalize(search.toLowerCase());
     // TODO: sépare le texte dans search en tableau de mots
     this.mainFilters = this.recipes.filter((recipe) => {
       // TODO: recherche par groupe de lettre
       const found = recipe.ingredients.some((ingredient) => {
-        return transformNormalize(ingredient.ingredient)
-          .toLowerCase()
-          .includes(search);
+        return transformNormalize(ingredient.ingredient).includes(search);
       });
 
       if (
@@ -178,6 +136,35 @@ class App {
         return true;
       }
       return false;
+    });
+    this.renderRecipes();
+  }
+
+  updateTagSearch() {
+    const tags = document.querySelector(".content-tags-search");
+
+    const ingredients = Array.from(
+      tags.querySelectorAll('[data-category="ingredients"]')
+    ).map((item) => item.textContent);
+
+    const appliances = Array.from(
+      tags.querySelectorAll('[data-category="appareils"]')
+    ).map((item) => item.textContent);
+
+    const ustensils = Array.from(
+      tags.querySelectorAll('[data-category="ustensiles"]')
+    ).map((item) => item.textContent);
+
+    this.tagFilters = this.recipes.filter((recipe) => {
+      if (appliances.length > 0 && !appliances.includes(recipe.appliance)) {
+        return false;
+      }
+      return (
+        ustensils.every((item) => recipe.ustensils.includes(item)) &&
+        ingredients.every((item) =>
+          recipe.ingredients.find((img) => img.ingredient === item)
+        )
+      );
     });
     this.renderRecipes();
   }
@@ -193,5 +180,5 @@ const app = new App();
 await app.run();
 
 // TODO:  loupe  de recherhe au click lance la recherche
-// TODO : la recherche commence a 3 caractere minimum
+
 // TODO : dropdown au click exterieur doit se ferme
