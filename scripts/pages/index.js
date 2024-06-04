@@ -63,6 +63,7 @@ class App {
     mainSearch.addEventListener("input", (e) => {
       this.updateMainSearch(e.target.value);
     });
+
     document
       .getElementById("close-main-search")
       .addEventListener("click", (e) => {
@@ -70,6 +71,13 @@ class App {
         mainSearch.value = "";
         this.updateMainSearch("");
       }); // boutton de reset;
+
+    // loupe au click lance la recherche
+    document.querySelector(".form-search").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const mainSearch = document.getElementById("main-search");
+      this.updateMainSearch(mainSearch.value);
+    });
   }
 
   // Méthode pour créer et afficher les filtres
@@ -179,12 +187,18 @@ class App {
     await this.load("./data/recipes.json");
     this.prepare();
     this.render();
+    // evenement qui ferme le dropdown au clique exterieur
+    document.addEventListener("click", (e) => {
+      const dropdowns = document.querySelectorAll(".dropdown.active");
+      const target = e.target.closest(".dropdown");
+      dropdowns.forEach((dropdown) => {
+        if (dropdown !== target) {
+          dropdown.classList.remove("active");
+        }
+      });
+    });
   }
 }
 
 const app = new App();
 await app.run();
-
-// TODO:  loupe  de recherhe au click lance la recherche
-
-// TODO : dropdown au click exterieur doit se ferme
