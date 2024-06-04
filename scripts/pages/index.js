@@ -119,24 +119,27 @@ class App {
   }
 
   updateMainSearch(search) {
-    // TODO : la recherche commence a 3 caractere minimum
-    search = transformNormalize(search.toLowerCase());
-    // TODO: sépare le texte dans search en tableau de mots
-    this.mainFilters = this.recipes.filter((recipe) => {
-      // TODO: recherche par groupe de lettre
-      const found = recipe.ingredients.some((ingredient) => {
-        return transformNormalize(ingredient.ingredient).includes(search);
-      });
+    if (search.length >= 3) {
+      search = transformNormalize(search.toLowerCase());
+      // TODO: sépare le texte dans search en tableau de mots
+      this.mainFilters = this.recipes.filter((recipe) => {
+        // TODO: recherche par groupe de lettre
+        const found = recipe.ingredients.some((ingredient) => {
+          return transformNormalize(ingredient.ingredient).includes(search);
+        });
 
-      if (
-        transformNormalize(recipe.name.toLowerCase()).includes(search) ||
-        found ||
-        transformNormalize(recipe.description.toLowerCase()).includes(search)
-      ) {
-        return true;
-      }
-      return false;
-    });
+        if (
+          transformNormalize(recipe.name.toLowerCase()).includes(search) ||
+          found ||
+          transformNormalize(recipe.description.toLowerCase()).includes(search)
+        ) {
+          return true;
+        }
+        return false;
+      });
+    } else {
+      this.mainFilters = this.recipes;
+    }
     this.renderRecipes();
   }
 
