@@ -110,7 +110,7 @@ $primary-bg-color: #ededed; */
 }
 .dropdown-search-close {
   position: absolute;
-  right: 2em;
+  right: 1.8em;
   top: 1.3em;
   width: 10px;
   height: 10px;
@@ -282,7 +282,7 @@ $primary-bg-color: #ededed; */
   aspect-ratio: 1;
   top: 0.8em;
   bottom: 0.9em;
-  right: 5.5em;
+  right: 3.5em;
   border: none;
   outline: 0;
   border-radius: 0.625em;
@@ -371,7 +371,6 @@ $primary-bg-color: #ededed; */
 }
 
 #recipes .container {
-  padding-top: 5em;
   padding-bottom: 4em;
 }
 
