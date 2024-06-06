@@ -129,25 +129,47 @@ class App {
   updateMainSearch(search) {
     search = transformNormalize(search.trim()).toLowerCase();
     // sépare le texte dans search en tableau de mots
-    const words = search.split(/\s+/).filter((word) => word.length >= 3);
-
+    const wordsArray = search.split(/\s+/);
+    // .filter((word) => word.length >= 3)
+    const words = [];
+    for (let i = 0; i < wordsArray.length; i++) {
+      const word = wordsArray[i];
+      if (word.length >= 3) {
+        words.push(word);
+      }
+    }
     if (words.length > 0) {
-      this.mainFilters = this.recipes.filter((recipe) =>
-        words.some((word) => {
-          const found = recipe.ingredients.some((ingredient) =>
-            transformNormalize(ingredient.ingredient).includes(word)
-          );
+      let mainFilters = [];
 
+      for (let i = 0; i < this.recipes.length; i++) {
+        let recipe = this.recipes[i];
+        let foundInRecipe = false;
+
+        for (let j = 0; j < words.length; j++) {
+          let word = words[j];
+          let found = false;
+
+          for (let k = 0; k < recipe.ingredients.length; k++) {
+            let ingredient = recipe.ingredients[k];
+            if (transformNormalize(ingredient.ingredient).includes(word)) {
+              found = true;
+              break;
+            }
+          }
           if (
             transformNormalize(recipe.name.toLowerCase()).includes(word) ||
             found ||
             transformNormalize(recipe.description.toLowerCase()).includes(word)
           ) {
-            return true;
+            foundInRecipe = true;
+            break;
           }
-          return false;
-        })
-      );
+        }
+        if (foundInRecipe) {
+          mainFilters.push(recipe);
+        }
+      }
+      this.mainFilters = mainFilters;
     } else {
       this.mainFilters = this.recipes;
     }
