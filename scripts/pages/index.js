@@ -127,10 +127,10 @@ class App {
   }
 
   updateMainSearch(search) {
-    search = transformNormalize(search.trim()).toLowerCase();
     // sépare le texte dans search en tableau de mots
-    const wordsArray = search.split(/\s+/);
-    // .filter((word) => word.length >= 3)
+    const wordsArray = transformNormalize(search.trim())
+      .toLowerCase()
+      .split(/\s+/);
     const words = [];
     for (let i = 0; i < wordsArray.length; i++) {
       const word = wordsArray[i];
@@ -157,8 +157,8 @@ class App {
             }
           }
           if (
-            transformNormalize(recipe.name.toLowerCase()).includes(word) ||
             found ||
+            transformNormalize(recipe.name.toLowerCase()).includes(word) ||
             transformNormalize(recipe.description.toLowerCase()).includes(word)
           ) {
             foundInRecipe = true;
