@@ -5,13 +5,14 @@ import { updateDropdown } from "../components/dropdown.js";
 
 class App {
   constructor() {
-    this.recipes = []; // Liste des recettes
+    // Initialisation des listes et des filtres
+    this.recipes = [];
     this.mainFilters = [];
     this.tagFilters = [];
 
-    this.appliances = []; // Liste des appareils
-    this.ingredients = []; // Liste des ingredients
-    this.ustensils = []; // Liste des ustensiles
+    this.appliances = [];
+    this.ingredients = [];
+    this.ustensils = [];
   }
 
   // Chargement des données
@@ -19,6 +20,7 @@ class App {
     this.recipes = await fetch(url).then((res) => res.json());
   }
 
+  // Fonction pour obtenir toutes les catégories (ingrédients, appareils, ustensiles)
   getAllCategories(recipes) {
     const allIngredients = [];
     const allAppareils = [];
@@ -39,6 +41,7 @@ class App {
     ];
   }
 
+  // Préparation des données : normalisation et préparation des filtres
   prepare() {
     this.recipes.forEach((recipe) => {
       recipe.ingredients = recipe.ingredients.map((ingredient) => {
@@ -58,6 +61,7 @@ class App {
     this.tagFilters = this.recipes;
   }
 
+  // Fonction pour gérer l'affichage de la barre de recherche et les événements associés
   renderHeader() {
     const mainSearch = document.getElementById("main-search");
     mainSearch.addEventListener("input", (e) => {
@@ -80,7 +84,7 @@ class App {
     });
   }
 
-  // Méthode pour créer et afficher les filtres
+  // Fonction pour créer et afficher les filtres
   renderFilters() {
     const filterSection = document.querySelector("#filters");
     const filters = filterTemplate(
@@ -96,6 +100,7 @@ class App {
     filterSection.appendChild(filters);
   }
 
+  // Fonction pour afficher les recettes filtrées
   renderRecipes() {
     // intersection des 2 tableaux de recette filtré
     const recipes = this.mainFilters.filter((recipe) =>
@@ -115,6 +120,7 @@ class App {
       cardSection.appendChild(card);
     }
 
+    // Mettre à jour le compteur de recettes affichées
     document.querySelector(
       "#recipe-counter"
     ).textContent = `${recipes.length} recette(s)`;
@@ -126,6 +132,7 @@ class App {
     this.renderRecipes();
   }
 
+  // Fonction pour gérer la recherche principale
   updateMainSearch(search) {
     search = transformNormalize(search.trim()).toLowerCase();
     // sépare le texte dans search en tableau de mots
@@ -154,6 +161,7 @@ class App {
     this.renderRecipes();
   }
 
+  // Fonction pour mettre à jour les filtres par tags
   updateTagSearch() {
     const tags = document.querySelector(".content-tags-search");
 
@@ -183,6 +191,7 @@ class App {
     this.renderRecipes();
   }
 
+  // Fonction principale pour exécuter l'application
   async run() {
     await this.load("./data/recipes.json");
     this.prepare();
@@ -199,6 +208,6 @@ class App {
     });
   }
 }
-
+// Instanciation et démarrage de l'application
 const app = new App();
 await app.run();

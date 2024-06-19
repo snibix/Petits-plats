@@ -1,13 +1,16 @@
 import { transformNormalize } from "../utils/tools.js";
 
+// Fonction pour mettre à jour la recherche dans le dropdown
 function dropdownSearchUpdate(search, items) {
   search = transformNormalize(search.trim().toLowerCase());
   const links = items.querySelectorAll("a");
   if (search === "") {
+    // Afficher tous les liens si la recherche est vide
     links.forEach((link) => {
       link.classList.remove("filtered");
     });
   } else {
+    // Filtrer les liens en fonction de la recherche
     links.forEach((link) => {
       const textContent = transformNormalize(link.textContent);
       link.classList.toggle("filtered", !textContent.includes(search));
@@ -15,6 +18,7 @@ function dropdownSearchUpdate(search, items) {
   }
 }
 
+// Fonction pour ajouter un tag
 function addTag(link, tags, tagEvent) {
   // Sélectionne le lien
   link.classList.add("dropdown-selected");
@@ -37,13 +41,15 @@ function addTag(link, tags, tagEvent) {
 
   tags.appendChild(contentTag);
 
+  // Ajouter un événement pour supprimer le tag lorsqu'on clique sur la croix
   contentClose.addEventListener("click", (e) => {
     e.preventDefault();
     removeTag(link, contentTag, tags);
-    tagEvent();
+    tagEvent(); // Mettre à jour les résultats de la recherche
   });
 }
 
+// Fonction pour supprimer un tag
 function removeTag(link, tag, tags) {
   link.classList.remove("dropdown-selected");
 
@@ -52,6 +58,7 @@ function removeTag(link, tag, tags) {
 
     const tagList = tags.querySelectorAll(".tag-search");
 
+    // Rechercher et supprimer le tag correspondant
     for (let i = tagList.length - 1; i >= 0; i--) {
       const item = tagList[i];
       if (
@@ -63,7 +70,7 @@ function removeTag(link, tag, tags) {
       }
     }
   }
-  tag?.remove();
+  tag?.remove(); // Supprimer le tag
 }
 
 export function createDropdownDOM(name, list, tagEvent) {
@@ -93,14 +100,14 @@ export function createDropdownDOM(name, list, tagEvent) {
   closeSearch.alt = "";
   closeSearch.className = "dropdown-search-close hidden";
 
-  //Evenement qui recherche dans la liste en fonction de la recherche dans l'input
+  // Mettre à jour la liste des éléments en fonction de la recherche
   dropdownSearch.addEventListener("input", (e) => {
     e.preventDefault();
     dropdownSearchUpdate(dropdownSearch.value, dropdownList);
     closeSearch.classList.toggle("hidden", dropdownSearch.value === "");
   });
 
-  //Evenement qui reset la recherche au click de la croix
+  // Réinitialiser la recherche lorsqu'on clique sur la croix
   closeSearch.addEventListener("click", (e) => {
     e.preventDefault();
     dropdownSearch.value = "";
@@ -121,7 +128,7 @@ export function createDropdownDOM(name, list, tagEvent) {
     link.textContent = element;
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      // Vérifie si le lien est déjà sélectionné
+      // Ajouter ou supprimer un tag selon l'état actuel
       if (link.classList.contains("dropdown-selected")) {
         removeTag(link, null, tags);
       } else {
@@ -142,6 +149,7 @@ export function createDropdownDOM(name, list, tagEvent) {
   return dropdown;
 }
 
+// Fonction pour mettre à jour les éléments du dropdown
 export function updateDropdown(name, list) {
   const dropdownIngredientItems = document.querySelectorAll(
     `#${name} .dropdown-item`
